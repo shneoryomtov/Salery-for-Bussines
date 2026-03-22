@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ScenarioInput, CalculationResults, Expense } from '@/lib/types';
 import { formatCurrency, formatNumber, formatPercentage } from '@/lib/formatters';
 
