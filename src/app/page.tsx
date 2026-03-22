@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ScenarioInput, CalculationResults, Expense } from '@/lib/types';
-import { formatCurrency, formatNumber, formatPercentage } from '@/lib/formatters';
+import { formatCurrency, formatPercentage } from '@/lib/formatters';
 
 const DEFAULT_SCENARIO: ScenarioInput = {
   name: 'תרחיש חדש',
