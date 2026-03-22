@@ -6,8 +6,6 @@ import {
   CalculationResults,
   TaxSettings,
   WorkProfile,
-  TimeOffSettings,
-  ContributionSettings,
   Expense,
 } from './types';
 
