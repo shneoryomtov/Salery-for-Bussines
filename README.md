@@ -1,194 +1,124 @@
-# Israeli Self-Employed Income Calculator
+# Salary Calculator for Israel - Next.js Edition
 
-A personal Streamlit web application for calculating and planning income as a self-employed individual in Israel. This tool helps estimate effective income, taxes, deductions, and plan various scenarios.
+A modern web application for calculating and planning personal income as a self-employed individual in Israel.
 
-## Features
+## 🚀 Features
 
-- **Work Profile Management**: Define work hours, income rate, and work schedule
-- **Calendar Integration**: Account for holidays, vacation days, and sick days
-- **Expense Tracking**: Add and manage business expenses with tax recognition percentages
-- **Pension & Study Fund**: Calculate contributions to pension plans and study funds
-- **Tax Calculations**: Apply progressive tax brackets for Israeli tax system
-- **National Insurance**: Calculate mandatory national insurance and health payments
-- **Target Net Solver**: Find required gross income to reach a target net income
-- **Scenario Save/Load**: Save and compare multiple financial scenarios
-- **Detailed Explanations**: See formula breakdowns for every calculation
+- **Modern React UI** with Hebrew RTL support
+- **Responsive Design** works on all devices
+- **Real-time Calculations** with instant results
+- **Professional Formatting** for currency and percentages
+- **Vercel Ready** - Deploy in one click
+- **Full Calculator** for work hours, expenses, taxes, and net income
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- **Python 3.11+**
-- **Streamlit**: Web UI framework
-- **Pandas & Plotly**: Data processing and visualization
-- **Decimal**: Precise money calculations
-- **Pydantic/Dataclasses**: Data validation and typing
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe calculations
+- **Tailwind CSS** - Modern styling
+- **Decimal.js** - Precise financial calculations
+- **Vercel** - Serverless deployment
 
-## Installation
+## 📦 Installation
 
-1. Clone or download this repository:
 ```bash
+# Clone the repo
 git clone git@github.com:shneoryomtov/Salery-for-Bussines.git
 cd Salary-for-Business
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
 ```
 
-2. Install dependencies:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 🚀 Deploy to Vercel
+
+### Option 1: Direct from GitHub (Recommended)
+
+1. Go to [vercel.com](https://vercel.com)
+2. Click "Import Project"
+3. Select your GitHub repository
+4. Click "Deploy"
+
+### Option 2: Using Vercel CLI
+
 ```bash
-pip install -r requirements.txt
+npm install -g vercel
+vercel
 ```
 
-## Running the App
+## 📝 Features
 
-```bash
-streamlit run main.py
-```
+### Work Profile
+- Hourly rate or monthly salary
+- Flexible work schedule
+- Multi-month work year support
 
-The app will open at `http://localhost:8501`
+### Calendar Management
+- Holiday days tracking
+- Erev holiday hours
+- Vacation and sick days
 
-## Project Structure
+### Expenses
+- Add unlimited business expenses
+- Tax recognition percentages
+- Automatic annualization (monthly/yearly)
 
-```
-Salary-for-Business/
-├── main.py                          # Streamlit app entry point
-├── requirements.txt                 # Python dependencies
-├── README.md                        # This file
-├── config/
-│   ├── settings_2026_israel.json   # Tax rates and holiday defaults
-│   └── default_scenario.json       # Default scenario template
-├── engine/
-│   ├── models.py                   # Data models (dataclasses)
-│   ├── calculator.py               # Main calculation pipeline
-│   ├── worktime.py                 # Work hours calculations
-│   ├── expenses.py                 # Expense processing
-│   ├── contributions.py            # Pension/study fund calculations
-│   ├── taxes.py                    # Tax and NI calculations
-│   ├── solver.py                   # Binary search solver
-│   ├── explain.py                  # Explanation generation
-│   └── io_utils.py                 # JSON I/O utilities
-├── app/
-│   ├── ui.py                       # Streamlit UI components
-│   └── formatters.py               # Number/currency formatters
-├── tests/
-│   └── test_engine.py              # Unit tests
-├── saved/                          # Directory for saved scenarios
-└── examples/                       # Example scenarios
-```
+### Calculations
+- Gross to net income breakdown
+- Progressive tax calculation
+- National insurance and health payments
+- Pension and study fund contributions
 
-## Configuration
+### Results
+- Summary cards with key metrics
+- Detailed breakdown table
+- Formula explanations
+- Effective deduction rate
 
-Edit `config/settings_2026_israel.json` to customize:
-- Income tax brackets
-- National insurance rates
-- Health payment rates
-- Study fund ceiling
-- Holiday defaults
-- Tax credit point values
+## 📊 Default Tax Settings (2026)
 
-**IMPORTANT**: Verify that tax rates match current year regulations before relying on results.
+The app includes default Israeli tax rates:
+- Income tax brackets (10% - 49%)
+- National insurance (7.11%)
+- Health payments (5.3%)
+- Tax credit point value (₪2,700)
+- Study fund ceiling (₪12,000)
 
-## Core Concepts
+**⚠️ Important**: Verify these match current regulations before relying on results.
 
-### Work Hours Calculation
+## 📱 Usage
 
-```
-Daily Hours = Weekly Hours ÷ Work Days per Week
-Potential Annual Hours = (Yearly Workdays - Holidays - Time Off) × Daily Hours
-Effective Billable Hours = Potential Hours - Lost Hours
-Annual Gross = Hourly Rate × Effective Hours (or Monthly Gross × Months)
-```
+1. **Enter Work Profile** - Define your work schedule and income
+2. **Add Calendar** - Account for holidays and time off
+3. **List Expenses** - Add business deductions
+4. **Calculate** - Get instant results
+5. **Review** - See detailed breakdown and formulas
 
-### Expense Recognition
+## 🔒 Privacy
 
-Expenses are applied with a tax recognition percentage (0-100%). This allows modeling:
-- Partially deductible expenses
-- Depreciation assets over multiple years
-- Recurring vs. one-time costs
-- Leasing payments with date ranges
+- **All calculations are local** - No data sent to servers except the API calculation
+- **No external storage** - Use browser localStorage for custom scenarios
+- **GDPR Compliant** - No personal data collection
 
-### Tax Calculation
+## 📄 Disclaimer
 
-Taxes are calculated using progressive brackets. Each bracket applies only to income within its threshold range:
+This tool is for **personal planning only**. It is NOT official tax advice. Always consult with a professional Israeli accountant (רואה חשבון) before making financial decisions.
 
-```
-Tax = Σ[Income in bracket × Tax rate for bracket] - Tax credits
-```
+## 📞 Support
 
-### Net Income Calculation
+For issues or questions, open an issue on GitHub.
 
-```
-Net Annual = Gross Income
-           - Actual Expenses (cash outflow)
-           - Income Tax
-           - National Insurance
-           - Health Payments
-           - Actual Pension/Study Fund Contributions (if cash mode)
-```
+## 📄 License
 
-**Key distinction**: Tax-deductible expenses reduce taxable income, but actual money paid for expenses also reduces net income.
-
-## Usage Guide
-
-### Basic Workflow
-
-1. **Set Work Profile**: Define your work schedule and income
-2. **Add Calendar Settings**: Account for holidays and time off
-3. **Enter Expenses**: Add all business expenses with recognition percentages
-4. **Configure Contributions**: Set pension and study fund percentages
-5. **Review Results**: See detailed breakdown of gross → net
-6. **Save Scenario**: Store this scenario for future reference or comparison
-7. **Use Solver**: Find gross income needed for a target net income
-
-### Scenario Comparison
-
-Save multiple scenarios to compare:
-- Different income levels
-- Various expense structures
-- Different work schedules
-- Contribution alternatives
-
-### Advanced Features
-
-- **Depreciation Assets**: Calculate annual depreciation for equipment purchases
-- **Leasing Payments**: Model recurring lease payments with limited date ranges
-- **Multiple Scenarios**: Compare side-by-side financial outcomes
-- **Tax Credits**: Apply tax credit points to reduce final tax burden
-
-## Important Notes
-
-⚠️ **This tool is NOT official tax advice.** It's for personal planning and estimation only.
-
-**Before relying on results:**
-- Verify all tax rates with current Israeli Tax Authority (Madatz) regulations
-- Confirm pension and study fund contribution limits
-- Discuss results with a professional accountant
-- Update config files annually for rate changes
-
-## Calculations are based on:
-- Israeli income tax brackets (2026 sample)
-- National insurance rates
-- Health payment rates
-- Study fund contribution ceilings
-- Standard work year assumptions (260 workdays)
-
-## Future Enhancements
-
-- [ ] Multi-year scenario comparison
-- [ ] Export to PDF/Excel reports
-- [ ] Historical tracking
-- [ ] Investment return modeling
-- [ ] Quarterly estimation mode
-- [ ] Web deployment
-
-## License & Disclaimer
-
-MIT License - See LICENSE file for details.
-
-**DISCLAIMER**: This tool is provided for educational and planning purposes only. It is not an official tax calculation tool and should not replace professional tax advice. Always consult with a certified Israeli tax advisor (עו״ד מס או רואה חשבון) before making financial decisions.
-
-## Support
-
-For issues, questions, or suggestions, please open an issue on GitHub.
+MIT License
 
 ---
 
-**Created**: March 2026  
-**Updated**: March 22, 2026  
-**Designed for**: Israeli self-employed individuals and freelancers
+**Created**: March 2026
+**Version**: 1.0.0
+**Target Platform**: Vercel ✨
