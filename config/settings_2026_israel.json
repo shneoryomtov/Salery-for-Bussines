@@ -1,0 +1,35 @@
+{
+  "year": 2026,
+  "yearly_workday_assumption": 260,
+  "currency_symbol": "₪",
+  "income_tax_brackets": [
+    {"threshold": 0, "rate": 0.1},
+    {"threshold": 75000, "rate": 0.14},
+    {"threshold": 110000, "rate": 0.205},
+    {"threshold": 170000, "rate": 0.23},
+    {"threshold": 240000, "rate": 0.3},
+    {"threshold": 400000, "rate": 0.35},
+    {"threshold": 640000, "rate": 0.49}
+  ],
+  "national_insurance_brackets": [
+    {"threshold": 0, "rate": 0.0711}
+  ],
+  "health_brackets": [
+    {"threshold": 0, "rate": 0.053}
+  ],
+  "tax_credit_point_value": 2700,
+  "study_fund_ceiling": 12000,
+  "pension_contribution_deductible": true,
+  "holiday_defaults": {
+    "peach": 8,
+    "shavuot": 2,
+    "rosh_hashanah": 2,
+    "yom_kippur": 1,
+    "sukkot": 7,
+    "hanukkah": 8,
+    "passover": 8,
+    "independence_day": 1,
+    "lag_baomer": 1,
+    "shavuot_second": 1
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Default Personal Scenario",
+  "work_profile": {
+    "year": 2026,
+    "workdays_per_week": 5,
+    "weekly_hours": 40,
+    "income_mode": "hourly",
+    "hourly_rate": 150,
+    "monthly_gross": null,
+    "months_per_year": 12
+  },
+  "calendar_settings": {
+    "holiday_mode": "builtin",
+    "holiday_days": 15,
+    "erev_holiday_days": 5,
+    "erev_holiday_hours_reduction": 4
+  },
+  "time_off_settings": {
+    "vacation_days_per_year": 14,
+    "sick_days_per_year": 6,
+    "treat_vacation_as_lost_income": true,
+    "treat_sick_as_lost_income": true
+  },
+  "contribution_settings": {
+    "pension_mode": "percentage",
+    "pension_value": 5,
+    "study_fund_mode": "percentage",
+    "study_fund_value": 2,
+    "maximize_study_to_ceiling": true
+  },
+  "expenses": []
+}
