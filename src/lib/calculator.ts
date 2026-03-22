@@ -6,7 +6,6 @@ import {
   CalculationResults,
   TaxSettings,
   WorkProfile,
-  CalendarSettings,
   TimeOffSettings,
   ContributionSettings,
   Expense,
