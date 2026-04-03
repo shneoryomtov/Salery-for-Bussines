@@ -1,53 +1,58 @@
-# Salary Calculator for Israel - Next.js Edition
+# מחשבון הכנסה לעצמאיים בישראל
 
-A modern web application for calculating and planning personal income as a self-employed individual in Israel.
+אפליקציית Flask לחישוב ההכנסה הנטו של עצמאיים בישראל, כולל מיסים, ביטוח לאומי והוצאות מוכרות.
 
-## 🚀 Features
+## תכונות
 
-- **Modern React UI** with Hebrew RTL support
-- **Responsive Design** works on all devices
-- **Real-time Calculations** with instant results
-- **Professional Formatting** for currency and percentages
-- **Vercel Ready** - Deploy in one click
-- **Full Calculator** for work hours, expenses, taxes, and net income
+- הרשמה והתחברות מאובטחת
+- שמירת תרחישי חישוב אישיים
+- חישוב מפורט של הכנסה ברוטו ונוטו
+- ממשק בעברית עם עיצוב מודרני
+- מנוע חישוב מודולרי וקל לעדכון
 
-## 🛠 Tech Stack
+## התקנה
 
-- **Next.js 15** - React framework with App Router
-- **TypeScript** - Type-safe calculations
-- **Tailwind CSS** - Modern styling
-- **Decimal.js** - Precise financial calculations
-- **Vercel** - Serverless deployment
+1. התקן Python 3.8 או גרסה חדשה יותר
+2. התקן את התלויות:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## 📦 Installation
+## הרצה
 
 ```bash
-# Clone the repo
-git clone git@github.com:shneoryomtov/Salery-for-Bussines.git
-cd Salary-for-Business
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
+python run.py
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+האפליקציה תרוץ בכתובת http://localhost:5000
 
-## 🚀 Deploy to Vercel
+## שימוש
 
-### Option 1: Direct from GitHub (Recommended)
+1. הירשם לאפליקציה
+2. התחבר
+3. צור תרחיש חדש עם הפרטים שלך
+4. צפה בתוצאות החישוב המפורטות
 
-1. Go to [vercel.com](https://vercel.com)
-2. Click "Import Project"
-3. Select your GitHub repository
-4. Click "Deploy"
+## הערות חשובות
 
-### Option 2: Using Vercel CLI
+- החישובים הם להערכה בלבד ולא מהווים ייעוץ מס
+- יש לעדכן את שיעורי המס וההכרה בהוצאות בהתאם לשינויים בחוק
+- התוכנה מיועדת לתכנון ותחזית, לא להגשת דוחות רשמיים
 
-```bash
-npm install -g vercel
+## מבנה הפרויקט
+
+```
+app/
+├── __init__.py          # הגדרת האפליקציה
+├── models.py            # מודלים של מסד הנתונים
+├── forms.py             # טפסים
+├── routes.py            # נתיבי האפליקציה
+├── calculator.py        # מנוע החישוב
+└── templates/           # תבניות HTML
+config.py                # הגדרות
+run.py                  # קובץ הרצה
+requirements.txt        # תלויות
+```
 vercel
 ```
 

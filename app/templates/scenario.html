@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>{{ scenario.title }}</h1>
+            <div>
+                <a href="{{ url_for('main.update_scenario', scenario_id=scenario.id) }}" class="btn btn-outline-secondary">ערוך</a>
+                <form method="POST" action="{{ url_for('main.delete_scenario', scenario_id=scenario.id) }}" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" class="btn btn-outline-danger" onclick="return confirm('האם אתה בטוח שברצונך למחוק תרחיש זה?')">מחק</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>נתוני קלט</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>שעות עבודה שבועיות:</strong> {{ scenario.weekly_hours }}</p>
+                        <p><strong>ימי עבודה בשבוע:</strong> {{ scenario.work_days_per_week }}</p>
+                        {% if scenario.hourly_rate %}
+                            <p><strong>שכר שעתי:</strong> ₪{{ "%.2f"|format(scenario.hourly_rate) }}</p>
+                        {% endif %}
+                        {% if scenario.monthly_gross %}
+                            <p><strong>שכר ברוטו חודשי:</strong> ₪{{ "%.2f"|format(scenario.monthly_gross) }}</p>
+                        {% endif %}
+                        <p><strong>ימי חגים והפחתות:</strong> {{ scenario.holidays_reduction }}</p>
+                        <p><strong>ימי חופשה:</strong> {{ scenario.vacation_days }}</p>
+                        <p><strong>ימי מחלה:</strong> {{ scenario.sick_days }}</p>
+                        <p><strong>הפרשה לפנסיה:</strong> {{ scenario.pension_contribution }}%</p>
+                        <p><strong>הפרשה לקרן השתלמות:</strong> {{ scenario.study_fund_contribution }}%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>תוצאות חישוב</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>שכר ברוטו שנתי:</strong> ₪{{ "%.2f"|format(results.annual_gross) }}</p>
+                        <p><strong>שכר ברוטו חודשי:</strong> ₪{{ "%.2f"|format(results.monthly_gross) }}</p>
+                        <p><strong>ימי עבודה יעילים בשנה:</strong> {{ "%.1f"|format(results.effective_work_days) }}</p>
+                        <p><strong>שעות עבודה יעילות בשנה:</strong> {{ "%.1f"|format(results.effective_work_hours) }}</p>
+                        <p><strong>שכר שעתי יעיל:</strong> ₪{{ "%.2f"|format(results.effective_hourly_rate) }}</p>
+                        <p><strong>הוצאות מוכרות:</strong> ₪{{ "%.2f"|format(results.recognized_expenses) }}</p>
+                        <p><strong>הכנסה חייבת במס:</strong> ₪{{ "%.2f"|format(results.taxable_income) }}</p>
+                        <p><strong>מס הכנסה:</strong> ₪{{ "%.2f"|format(results.income_tax) }}</p>
+                        <p><strong>ביטוח לאומי:</strong> ₪{{ "%.2f"|format(results.national_insurance) }}</p>
+                        <p><strong>ביטוח בריאות:</strong> ₪{{ "%.2f"|format(results.health_insurance) }}</p>
+                        <p><strong>שכר נטו שנתי:</strong> ₪{{ "%.2f"|format(results.annual_net) }}</p>
+                        <p><strong>שכר נטו חודשי:</strong> ₪{{ "%.2f"|format(results.monthly_net) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>הסבר מפורט</h4>
+            </div>
+            <div class="card-body">
+                <h5>חישוב ימי עבודה יעילים</h5>
+                <p>ימי עבודה כוללים בשנה: {{ scenario.work_days_per_week * 52 }}<br>
+                הפחתת חגים רשמיים: 9<br>
+                הפחתת חגים נוספים: {{ scenario.holidays_reduction }}<br>
+                סה"כ ימי עבודה יעילים: {{ "%.1f"|format(results.effective_work_days) }}</p>
+
+                <h5>חישוב שעות עבודה יעילות</h5>
+                <p>שעות עבודה יומיות: {{ "%.2f"|format(scenario.weekly_hours / scenario.work_days_per_week) }}<br>
+                כפול ימי עבודה יעילים: {{ "%.1f"|format(results.effective_work_hours) }}</p>
+
+                <h5>חישוב הכנסה ברוטו</h5>
+                {% if scenario.monthly_gross %}
+                    <p>שכר ברוטו חודשי: ₪{{ "%.2f"|format(scenario.monthly_gross) }} × 12 = ₪{{ "%.2f"|format(results.annual_gross) }}</p>
+                {% else %}
+                    <p>שכר שעתי: ₪{{ "%.2f"|format(scenario.hourly_rate) }} × שעות יעילות: {{ "%.1f"|format(results.effective_work_hours) }} = ₪{{ "%.2f"|format(results.annual_gross) }}</p>
+                {% endif %}
+
+                <h5>חישוב הוצאות מוכרות</h5>
+                <p>רכב: ₪{{ "%.2f"|format(scenario.car_expense) }} × {{ scenario.car_recognition }} = ₪{{ "%.2f"|format(scenario.car_expense * scenario.car_recognition) }}<br>
+                דלק: ₪{{ "%.2f"|format(scenario.fuel_expense) }} × {{ scenario.fuel_recognition }} = ₪{{ "%.2f"|format(scenario.fuel_expense * scenario.fuel_recognition) }}<br>
+                ציוד: ₪{{ "%.2f"|format(scenario.equipment_expense) }} × {{ scenario.equipment_recognition }} = ₪{{ "%.2f"|format(scenario.equipment_expense * scenario.equipment_recognition) }}<br>
+                משרד ביתי: ₪{{ "%.2f"|format(scenario.home_office_expense) }} × {{ scenario.home_office_recognition }} = ₪{{ "%.2f"|format(scenario.home_office_expense * scenario.home_office_recognition) }}<br>
+                פחת: ₪{{ "%.2f"|format(scenario.depreciation_expense) }} × {{ scenario.depreciation_recognition }} = ₪{{ "%.2f"|format(scenario.depreciation_expense * scenario.depreciation_recognition) }}<br>
+                ליסינג: ₪{{ "%.2f"|format(scenario.leasing_expense) }} × {{ scenario.leasing_recognition }} = ₪{{ "%.2f"|format(scenario.leasing_expense * scenario.leasing_recognition) }}<br>
+                הוצאות חוזרות: ₪{{ "%.2f"|format(scenario.recurring_expenses) }} × {{ scenario.recurring_recognition }} = ₪{{ "%.2f"|format(scenario.recurring_expenses * scenario.recurring_recognition) }}<br>
+                סה"כ הוצאות מוכרות: ₪{{ "%.2f"|format(results.recognized_expenses) }}</p>
+
+                <h5>חישוב הכנסה חייבת</h5>
+                <p>הכנסה ברוטו: ₪{{ "%.2f"|format(results.annual_gross) }}<br>
+                פחות הוצאות מוכרות: ₪{{ "%.2f"|format(results.recognized_expenses) }}<br>
+                פחות ימי חופשה (8.33%): ₪{{ "%.2f"|format(results.vacation_reserve) }}<br>
+                פחות ימי מחלה (2.5%): ₪{{ "%.2f"|format(results.sick_reserve) }}<br>
+                הכנסה חייבת: ₪{{ "%.2f"|format(results.taxable_income) }}</p>
+
+                <h5>חישוב מסים והפרשות</h5>
+                <p>מס הכנסה: ₪{{ "%.2f"|format(results.income_tax) }}<br>
+                ביטוח לאומי: ₪{{ "%.2f"|format(results.national_insurance) }}<br>
+                ביטוח בריאות: ₪{{ "%.2f"|format(results.health_insurance) }}</p>
+
+                <h5>חישוב שכר נטו</h5>
+                <p>הכנסה ברוטו: ₪{{ "%.2f"|format(results.annual_gross) }}<br>
+                פחות כל ההוצאות והמסים: ₪{{ "%.2f"|format(results.annual_gross - results.annual_net) }}<br>
+                שכר נטו שנתי: ₪{{ "%.2f"|format(results.annual_net) }}<br>
+                שכר נטו חודשי: ₪{{ "%.2f"|format(results.monthly_net) }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
